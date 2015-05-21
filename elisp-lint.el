@@ -65,17 +65,20 @@
 (put 'elisp-lint-ignored-validators 'safe-local-variable 'listp)
 
 (defmacro elisp-lint--protect (&rest body)
+  "Wrap BODY in `condition-case' block."
   (declare (indent 0) (debug t))
   `(condition-case err
        (progn ,@body)
      (error (message "%s" (error-message-string err)) nil)))
 
-(defmacro elisp-lint--run (name &rest args)
-  `(or (member ,name elisp-lint-ignored-validators)
-       (elisp-lint--protect (funcall (intern (concat "elisp-lint--" ,name))
+(defmacro elisp-lint--run (validator-name &rest args)
+  "Run VALIDATOR-NAME on provided ARGS."
+  `(or (member ,validator-name elisp-lint-ignored-validators)
+       (elisp-lint--protect (funcall (intern (concat "elisp-lint--" ,validator-name))
                                      ,@args))))
 
 (defun elisp-lint--amend-ignored-validators-from-command-line ()
+  "Add to `elisp-lint-ignored-validators' specified validators on command ligne."
   (while (string-match "^--no-\\([a-z-]*\\)" (car command-line-args-left))
     (add-to-list 'elisp-lint-ignored-validators
                  (match-string 1 (pop command-line-args-left)))))
@@ -83,13 +86,13 @@
 ;; validators
 
 (defun elisp-lint--byte-compile (file)
-  "Byte-compiles the file with all warnings enabled."
+  "Byte-compiles the FILE with all warnings enabled."
   (let ((byte-compile-error-on-warn t)
         (byte-compile-warnings t))
     (byte-compile-file file)))
 
 (defun elisp-lint--package-format ()
-  "Calls `package-buffer-info' to validate some file metadata."
+  "Call `package-buffer-info' to validate some file metadata."
   (or (null (require 'package nil t))
       (package-buffer-info)))
 
@@ -119,13 +122,15 @@ Use a file variable or a .dir.locals file to set the value."
                (elisp-lint--join-lines lines)))))
 
 (defun elisp-lint--not-tab-regular-expression ()
+  "Return a regular expression for leading tab."
   (concat "^" (make-string tab-width ? )))
 
 (defun elisp-lint--join-lines (lines)
+  "Create a string joining the LINES number provided."
   (mapconcat (lambda (i) (format "#%d" i)) (sort lines '<) ", "))
 
 (defun elisp-lint--fill-column ()
-  "Verifies that no line exceeds the number of columns in fill-column.
+  "Verifies that no line exceeds the number of columns in `fill-column'.
 Use a file variable or a .dir.locals file to override the value."
   (save-excursion
     (let ((line-number 1)
@@ -142,7 +147,7 @@ Use a file variable or a .dir.locals file to override the value."
                  fill-column (elisp-lint--join-lines too-long-lines))))))
 
 (defun elisp-lint--trailing-whitespace ()
-  "Verifies that no line contains trailing whitespace."
+  "Verifies that no line contain trailing whitespace."
   (save-excursion
     (let ((lines nil))
       (goto-char (point-min))
@@ -152,9 +157,9 @@ Use a file variable or a .dir.locals file to override the value."
           (error "Line numbers with trailing whitespace: %s"
                  (elisp-lint--join-lines (sort lines '<)))))))
 
-;; linting
-
+;;; Linting
 (defun elisp-lint-file (file)
+  "Lint provided FILE."
   (with-temp-buffer
     (find-file file)
     (when elisp-lint-ignored-validators
@@ -170,6 +175,7 @@ Use a file variable or a .dir.locals file to override the value."
       success)))
 
 (defun elisp-lint-files-batch ()
+  "Lint files provided on command line."
   (elisp-lint--amend-ignored-validators-from-command-line)
   (let ((success t))
     (while command-line-args-left
