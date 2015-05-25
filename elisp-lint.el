@@ -147,7 +147,7 @@ Use a file variable or a .dir.locals file to override the value."
                  fill-column (elisp-lint--join-lines too-long-lines))))))
 
 (defun elisp-lint--trailing-whitespace ()
-  "Verifies that no line contain trailing whitespace."
+  "Verifies that no line has trailing whitespace."
   (save-excursion
     (let ((lines nil))
       (goto-char (point-min))
