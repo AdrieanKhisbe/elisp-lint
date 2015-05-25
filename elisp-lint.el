@@ -180,13 +180,12 @@ Use a file variable or a .dir.locals file to override the value."
   "Lint files provided on command line."
   (elisp-lint--amend-ignored-validators-from-command-line)
   (let ((success t))
-    (while command-line-args-left
-      (message "%s..." (car command-line-args-left))
-      (if (elisp-lint-file (car command-line-args-left))
-          (message "%s...OK" (car command-line-args-left))
-        (message "%s...FAIL" (car command-line-args-left))
-        (setq success nil))
-      (pop command-line-args-left))
+    (dolist (arg command-line-args-left)
+      (message "%s..." arg)
+      (if (elisp-lint-file arg)
+          (message "%s...OK" arg)
+        (progn (message "%s...FAIL" arg)
+               (setq success nil))))
     (kill-emacs (if success 0 1))))
 
 (provide 'elisp-lint)
