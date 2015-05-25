@@ -74,11 +74,13 @@
 (defmacro elisp-lint--run (validator-name &rest args)
   "Run VALIDATOR-NAME on provided ARGS."
   `(or (member ,validator-name elisp-lint-ignored-validators)
-       (elisp-lint--protect (funcall (intern (concat "elisp-lint--" ,validator-name))
-                                     ,@args))))
+       (elisp-lint--protect (funcall
+                             (intern (concat "elisp-lint--" ,validator-name))
+                             ,@args))))
 
 (defun elisp-lint--amend-ignored-validators-from-command-line ()
-  "Add to `elisp-lint-ignored-validators' specified validators on command ligne."
+  "Add to `elisp-lint-ignored-validators' specified \
+validators on command ligne."
   (while (string-match "^--no-\\([a-z-]*\\)" (car command-line-args-left))
     (add-to-list 'elisp-lint-ignored-validators
                  (match-string 1 (pop command-line-args-left)))))
