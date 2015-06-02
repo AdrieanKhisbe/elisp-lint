@@ -24,7 +24,7 @@ before_install:
 
 script:
   - emacs --version
-  - cask exec emacs -Q --batch -l elisp-lint.el -f elisp-lint-files-batch *.el
+  - make test
 
 notifications:
   email: false
