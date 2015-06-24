@@ -31,8 +31,13 @@
      ,@body
      (f-delete default-directory :force)))
 
+(require 'undercover)
+(undercover "*.el" "elisp-lint/*.el"
+            (:exclude "*-test.el")
+            (:send-report nil)
+            (:report-file "/tmp/undercover-report.json"))
 (require 'ert)
-(require 'elisp-lint (f-expand "elisp-lint" elisp-lint-root-path))
+(require 'elisp-lint)
 
 (provide 'test-helper)
 ;;; test-helper.el ends here

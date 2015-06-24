@@ -11,6 +11,10 @@
 
 (add-to-list 'load-path elisp-lint-root-path)
 
+(require 'undercover)
+(undercover "*.el" "elisp-lint/*.el"
+            (:exclude "*-test.el")
+            (:report-file "/tmp/undercover-report.json"))
 (require 'elisp-lint)
 (require 'espuds)
 (require 'ert)
