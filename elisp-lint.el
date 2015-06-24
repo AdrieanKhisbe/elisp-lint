@@ -4,9 +4,9 @@
 ;;
 ;; Author: Nikolaj Schumacher <bugs * nschum de>
 ;; Version: 0.1
-;; Keywords: lisp
+;; Keywords: lisp, tools
 ;; URL: http://github.com/nschum/elisp-lint/
-;; Compatibility: GNU Emacs 23.x, GNU Emacs 24.x
+;; Compatibility: GNU Emacs 24.x
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -42,10 +42,7 @@
 ;; For a full list of validators, see `elisp-lint-file-validators' and
 ;; `elisp-lint-buffer-validators'.
 ;;
-;;; Change Log:
-;;
-;;    Initial release.
-;;
+
 ;;; Code:
 
 ;; helpers
@@ -103,7 +100,7 @@ validators on command ligne."
   (let ((tick (buffer-modified-tick)))
     (indent-region (point-min) (point-max))
     (or (equal tick (buffer-modified-tick))
-        (error "Indentation incorrect."))))
+        (error "Incorrect indentation"))))
 
 (defun elisp-lint--indent-character ()
   "Verifies that each line is indented according to `indent-tabs-mode`.
