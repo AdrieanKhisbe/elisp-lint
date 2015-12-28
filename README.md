@@ -4,7 +4,12 @@ Elisp Lint
 *Basic linting for Emacs Lisp*
 
 <!-- temporary pointing toward my repo -->
-[![Build Status](https://travis-ci.org/AdrieanKhisbe/elisp-lint.svg)](https://travis-ci.org/AdrieanKhisbe/elisp-lint) [![Coverage Status](https://coveralls.io/repos/AdrieanKhisbe/elisp-lint/badge.svg)](https://coveralls.io/r/AdrieanKhisbe/elisp-lint) [![Tag Version](https://img.shields.io/github/tag/AdrieanKhisbe/elisp-lint.svg)](https://github.com/AdrieanKhisbe/elisp-lint/tags) [![License] (http://img.shields.io/:license-gpl3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
+[![Build Status](https://travis-ci.org/AdrieanKhisbe/elisp-lint.svg)](https://travis-ci.org/AdrieanKhisbe/elisp-lint)
+[![Coverage Status](https://coveralls.io/repos/AdrieanKhisbe/elisp-lint/badge.svg)](https://coveralls.io/r/AdrieanKhisbe/elisp-lint)
+[![MELPA](http://melpa.org/packages/elisp-lint-badge.svg)](http://melpa.org/#/elisp-lint)
+[![MELPA stable](http://stable.melpa.org/packages/elisp-lint-badge.svg)](http://stable.melpa.org/#/elisp-lint)
+[![Tag Version](https://img.shields.io/github/tag/AdrieanKhisbe/elisp-lint.svg)](https://github.com/AdrieanKhisbe/elisp-lint/tags)
+[![License](http://img.shields.io/:license-gpl3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
 
 
 ## Usage
